@@ -18,14 +18,15 @@
    /* Print Area - F4 Size (330mm x 210mm, Landscape) */
    .print-area {
        width: 330mm;
-       height: 200mm;
+       height: 195mm;
        background: white;
        margin: 10mm auto; /* Paper margin */
        box-shadow: 0 0 10px rgba(0,0,0,0.1);
        display: grid;
        grid-template-columns: repeat(6, 54mm); /* Adjusted to fit */
        grid-template-rows: repeat(6, 30mm); /* Adjusted to fit */
-       gap: 1mm; /* Increased gap for cutting */
+       column-gap: 1mm; /* Increased gap for cutting */
+       column-gap: 1mm;
    }
    /* Individual coupon */
    .coupon {
@@ -77,7 +78,7 @@
        }
    }
    @page {
-       size: 330mm 200mm; /* F4 landscape */
+       size: 330mm 195mm; /* F4 landscape */
        margin: 10mm; /* Paper margin */
    }
 </style>
@@ -136,7 +137,7 @@
        if (codes.length > 0) {
            setTimeout(() => {
                window.print();
-           }, 1000);
+           }, 3000);
        }
    }
    function printCoupons() {
