@@ -20,17 +20,17 @@
        width: 330mm;
        height: 210mm;
        background: white;
-       margin: 10mm auto; /* Added paper margin */
+       margin: 10mm auto; /* Paper margin */
        box-shadow: 0 0 10px rgba(0,0,0,0.1);
        display: grid;
-       grid-template-columns: repeat(6, 55mm);
-       grid-template-rows: repeat(6, 35mm);
-       gap: 2mm; /* Added margin for cutting space */
+       grid-template-columns: repeat(6, 54.5mm); /* Adjusted to fit with gap */
+       grid-template-rows: repeat(6, 34.5mm); /* Adjusted to fit with gap */
+       gap: 0.5mm; /* Reduced gap for cutting space */
    }
    /* Individual coupon */
    .coupon {
-       width: 55mm;
-       height: 35mm;
+       width: 54.5mm; /* Adjusted to fit */
+       height: 34.5mm; /* Adjusted to fit */
        border: 1px solid #000;
        display: flex;
        align-items: center;
@@ -40,23 +40,23 @@
    }
    .qr-container {
        width: 25mm;
-       height: 25mm; /* Explicitly square */
+       height: 25mm; /* Square */
    }
    .qr-container img {
        width: 100%;
        height: 100%;
    }
    .coupon-number {
-       width: 25mm; /* Equal to QR size for balance */
+       width: 24.5mm; /* Adjusted to fit with padding */
        text-align: center;
-       font-size: 24px; /* Increased to maximize space */
+       font-size: 30px; /* Increased to maximize space */
        font-weight: bold;
    }
    /* Vertical line between QR and number */
    .coupon::after {
        content: '';
        position: absolute;
-       left: 30mm; /* Center between 25mm QR and 25mm number (5mm padding + 25mm QR) */
+       left: 29.5mm; /* Adjusted: 5mm padding + 24.5mm QR */
        top: 5mm;
        bottom: 5mm;
        width: 1px;
@@ -135,6 +135,14 @@
            }, 1000);
        }
    }
+   function printCoupons() {
+       const printArea = document.getElementById('printArea');
+       if (!printArea.innerHTML.trim()) {
+           alert('Mohon generate kupon terlebih dahulu');
+           return;
+       }
+       window.print();
+   }
    function downloadPDF() {
        const printArea = document.getElementById('printArea');
        if (!printArea.innerHTML.trim()) {
@@ -160,12 +168,19 @@
    }
    window.addEventListener('load', function() {
        generateCoupons();
-       // Add download button dynamically for manual PDF download
+       // Add buttons dynamically
+       const buttonContainer = document.createElement('div');
+       buttonContainer.style.margin = '20px';
+       const printButton = document.createElement('button');
+       printButton.textContent = 'Print';
+       printButton.onclick = printCoupons;
+       printButton.style.marginRight = '10px';
        const downloadButton = document.createElement('button');
        downloadButton.textContent = 'Download PDF';
        downloadButton.onclick = downloadPDF;
-       downloadButton.style.margin = '20px';
-       document.body.insertBefore(downloadButton, document.getElementById('printArea'));
+       buttonContainer.appendChild(printButton);
+       buttonContainer.appendChild(downloadButton);
+       document.body.insertBefore(buttonContainer, document.getElementById('printArea'));
    });
 </script>
 </body>
