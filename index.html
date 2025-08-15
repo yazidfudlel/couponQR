@@ -93,7 +93,7 @@
            throw new Error(`Invalid coupon code format: ${code}`);
        }
        return {
-           couponCode: parts[0] || '',
+           couponCode: code || '',
            couponNumber: parts[1] || ''
        };
    }
