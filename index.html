@@ -23,19 +23,19 @@
        margin: 10mm auto; /* Paper margin */
        box-shadow: 0 0 10px rgba(0,0,0,0.1);
        display: grid;
-       grid-template-columns: repeat(6, 54.5mm);
-       grid-template-rows: repeat(6, 34.5mm);
-       gap: 0.5mm; /* Gap for cutting space */
+       grid-template-columns: repeat(6, 54mm); /* Adjusted to fit */
+       grid-template-rows: repeat(6, 34mm); /* Adjusted to fit */
+       gap: 1mm; /* Increased gap for cutting */
    }
    /* Individual coupon */
    .coupon {
-       width: 54.5mm;
-       height: 34.5mm;
+       width: 54mm; /* Adjusted to fit */
+       height: 34mm; /* Adjusted to fit */
        border: 1px solid #000;
        display: flex;
        align-items: center;
        justify-content: space-between;
-       padding: 2mm; /* Reduced from 5mm */
+       padding: 1mm; /* Reduced from 2mm */
        position: relative; /* For vertical line positioning */
    }
    .qr-container {
@@ -47,7 +47,7 @@
        height: 100%;
    }
    .coupon-number {
-       width: 24.5mm;
+       width: 24mm; /* Adjusted to fit with padding */
        text-align: center;
        font-size: 30px; /* Maximized */
        font-weight: bold;
@@ -56,9 +56,9 @@
    .coupon::after {
        content: '';
        position: absolute;
-       left: 27mm; /* Adjusted: 2mm padding + 25mm QR */
-       top: 2mm; /* Adjusted for reduced padding */
-       bottom: 2mm; /* Adjusted for reduced padding */
+       left: 26mm; /* Adjusted: 1mm padding + 25mm QR */
+       top: 1mm; /* Adjusted for reduced padding */
+       bottom: 1mm; /* Adjusted for reduced padding */
        width: 1px;
        background: #000;
    }
@@ -66,6 +66,10 @@
        body {
            background: white;
            margin: 0;
+       }
+       /* Hide everything except print-area */
+       body > *:not(.print-area) {
+           display: none;
        }
        .print-area {
            margin: 10mm; /* Paper margin in print */
@@ -171,6 +175,7 @@
        // Add buttons dynamically
        const buttonContainer = document.createElement('div');
        buttonContainer.style.margin = '20px';
+       buttonContainer.className = 'button-container'; // Add class for print hiding
        const printButton = document.createElement('button');
        printButton.textContent = 'Print';
        printButton.onclick = printCoupons;
