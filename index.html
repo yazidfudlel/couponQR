@@ -25,7 +25,7 @@
        display: grid;
        grid-template-columns: repeat(6, 54mm); /* Adjusted to fit */
        grid-template-rows: repeat(6, 30mm); /* Adjusted to fit */
-       gap: 1.5mm; /* Increased gap for cutting */
+       gap: 1mm; /* Increased gap for cutting */
    }
    /* Individual coupon */
    .coupon {
@@ -52,16 +52,16 @@
        font-size: 40px; /* Maximized */
        font-weight: bold;
    }
-   /* Vertical line between QR and number */
+   /* Vertical line between QR and number 
    .coupon::after {
        content: '';
        position: absolute;
-       left: 25mm; /* Adjusted: 1mm padding + 25mm QR */
-       top: 1mm; /* Adjusted for reduced padding */
-       bottom: 1mm; /* Adjusted for reduced padding */
+       left: 25mm;
+       top: 1mm;
+       bottom: 1mm; 
        width: 1px;
        background: #000;
-   }
+   } */
    @media print {
        body {
            background: white;
