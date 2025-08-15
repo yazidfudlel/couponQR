@@ -25,7 +25,7 @@
        display: grid;
        grid-template-columns: repeat(6, 54mm); /* Adjusted to fit */
        grid-template-rows: repeat(6, 30mm); /* Adjusted to fit */
-       gap: 2mm; /* Increased gap for cutting */
+       gap: 1.5mm; /* Increased gap for cutting */
    }
    /* Individual coupon */
    .coupon {
@@ -35,7 +35,7 @@
        display: flex;
        align-items: center;
        justify-content: space-between;
-       padding: 2mm; /* Reduced from 2mm */
+       padding: 2mm;
        position: relative; /* For vertical line positioning */
    }
    .qr-container {
@@ -49,14 +49,14 @@
    .coupon-number {
        width: 24mm; /* Adjusted to fit with padding */
        text-align: center;
-       font-size: 30px; /* Maximized */
+       font-size: 40px; /* Maximized */
        font-weight: bold;
    }
    /* Vertical line between QR and number */
    .coupon::after {
        content: '';
        position: absolute;
-       left: 30mm; /* Adjusted: 1mm padding + 25mm QR */
+       left: 25mm; /* Adjusted: 1mm padding + 25mm QR */
        top: 1mm; /* Adjusted for reduced padding */
        bottom: 1mm; /* Adjusted for reduced padding */
        width: 1px;
