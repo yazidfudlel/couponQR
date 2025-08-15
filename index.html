@@ -17,7 +17,7 @@
    }
    /* Print Area - F4 Size (330mm x 210mm, Landscape) */
    .print-area {
-       width: 330mm;
+       width: 325mm;
        height: 195mm;
        background: white;
        margin: 10mm auto; /* Paper margin */
@@ -26,7 +26,7 @@
        grid-template-columns: repeat(6, 54mm); /* Adjusted to fit */
        grid-template-rows: repeat(6, 30mm); /* Adjusted to fit */
        column-gap: 1mm; /* Increased gap for cutting */
-       column-gap: 1mm;
+       row-gap: 1mm;
    }
    /* Individual coupon */
    .coupon {
@@ -78,7 +78,7 @@
        }
    }
    @page {
-       size: 330mm 195mm; /* F4 landscape */
+       size: 325mm 195mm; /* F4 landscape */
        margin: 10mm; /* Paper margin */
    }
 </style>
