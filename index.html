@@ -21,6 +21,7 @@
        height: 190mm;
        background: white;
        margin: 10mm auto; /* Paper margin */
+       padding-right: 5mm; 
        box-shadow: 0 0 10px rgba(0,0,0,0.1);
        display: grid;
        grid-template-columns: repeat(6, 50mm); 
@@ -54,16 +55,7 @@
        font-size: 40px; 
        font-weight: bold;
    }
-   /* Vertical line between QR and number 
-   .coupon::after {
-       content: '';
-       position: absolute;
-       left: 25mm;
-       top: 1mm;
-       bottom: 1mm; 
-       width: 1px;
-       background: #000;
-   } */
+  
    @media print {
        body {
            background: white;
