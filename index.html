@@ -17,41 +17,41 @@
    }
    /* Print Area - F4 Size (330mm x 210mm, Landscape) */
    .print-area {
-       width: 331mm;
-       height: 211mm;
+       width: 310mm;
+       height: 190mm;
        background: white;
-       /* margin: 10mm auto;  Paper margin */
+       margin: 10mm auto; /* Paper margin */
        box-shadow: 0 0 10px rgba(0,0,0,0.1);
        display: grid;
-       grid-template-columns: repeat(6, 50mm); /* Adjusted to fit */
-       grid-template-rows: repeat(6, 30mm); /* Adjusted to fit */
-       column-gap: 1.5mm; /* Increased gap for cutting */
-       row-gap: 1.5mm;
+       grid-template-columns: repeat(6, 50mm); 
+       grid-template-rows: repeat(6, 30mm); 
+       column-gap: 1.5mm; /* gap for cutting */
+       row-gap: 1.5mm; /* gap for cutting */
        break-after: avoid;
    }
    /* Individual coupon */
    .coupon {
-       width: 50mm; /* Adjusted to fit */
-       height: 30mm; /* Adjusted to fit */
+       width: 50mm; 
+       height: 30mm;
        border: 1px solid #000;
        display: flex;
        align-items: center;
        justify-content: space-between;
        padding: 2mm;
-       position: relative; /* For vertical line positioning */
+       position: relative;
    }
    .qr-container {
        width: 25mm;
-       height: 25mm; /* Square */
+       height: 25mm; 
    }
    .qr-container img {
        width: 100%;
        height: 100%;
    }
    .coupon-number {
-       width: 24mm; /* Adjusted to fit with padding */
+       width: 24mm;
        text-align: center;
-       font-size: 40px; /* Maximized */
+       font-size: 40px; 
        font-weight: bold;
    }
    /* Vertical line between QR and number 
@@ -74,8 +74,9 @@
            display: none;
        }
        .print-area {
-           margin: 10mm; /* Paper margin in print */
+           margin: 0;
            box-shadow: none;
+           page-break-after: avoid;
        }
    }
    @page {
@@ -135,11 +136,11 @@
        }
        printArea.innerHTML = html;
        // Trigger print preview if codes are provided
-       if (codes.length > 0) {
+       /* if (codes.length > 0) {
            setTimeout(() => {
                window.print();
            }, 3000);
-       }
+       } */
    }
    function printCoupons() {
        const printArea = document.getElementById('printArea');
