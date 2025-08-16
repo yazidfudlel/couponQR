@@ -105,6 +105,10 @@
        const printArea = document.getElementById('printArea');
        // Generate 36 coupon slots (empty if no code provided)
        let html = '';
+
+       
+      html += `<div style="width: 10mm; height: 30mm; visibility: hidden;"></div>`;
+
        for (let i = 0; i < 36; i++) {
            if (codes[i]) {
                try {
