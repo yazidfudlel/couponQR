@@ -30,6 +30,23 @@
        row-gap: 1.5mm; /* gap for cutting */
        break-after: avoid;
    }
+  
+  .left-blank {
+      width: 5mm;
+      height: 100%;
+      background: transparent;
+      flex-shrink: 0;
+  }
+  
+  .grid-area {
+      display: grid;
+      grid-template-columns: repeat(6, 50mm);
+      grid-template-rows: repeat(6, 30mm);
+      column-gap: 1.5mm;
+      row-gap: 1.5mm;
+      width: auto;
+  }
+
    /* Individual coupon */
    .coupon {
        width: 50mm; 
@@ -105,9 +122,6 @@
        const printArea = document.getElementById('printArea');
        // Generate 36 coupon slots (empty if no code provided)
        let html = '';
-
-       
-      html += `<div style="width: 10mm; height: 30mm; visibility: hidden;"></div>`;
 
        for (let i = 0; i < 36; i++) {
            if (codes[i]) {
