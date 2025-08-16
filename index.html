@@ -16,20 +16,19 @@
        background-color: #f5f5f5;
    }
    /* Print Area - F4 Size (330mm x 210mm, Landscape) */
-   .print-area {
-       width: 315mm;
-       height: 190mm;
-       background: white;
-       margin: 10mm auto; /* Paper margin */
-       padding-right: 5mm; 
-       box-shadow: 0 0 10px rgba(0,0,0,0.1);
-       display: grid;
-       grid-template-columns: repeat(6, 50mm); 
-       grid-template-rows: repeat(6, 30mm); 
-       column-gap: 1.5mm; /* gap for cutting */
-       row-gap: 1.5mm; /* gap for cutting */
-       break-after: avoid;
-   }
+   
+  .print-area {
+      width: 315mm;
+      height: 190mm;
+      background: white;
+      margin: 10mm auto;
+      padding-right: 5mm;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      display: flex; 
+      flex-direction: row;
+      break-after: avoid;
+  }
+
   
   .left-blank {
       width: 5mm;
