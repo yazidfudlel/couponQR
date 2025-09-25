@@ -15,6 +15,12 @@
        font-family: Arial, sans-serif;
        background-color: #f5f5f5;
    }
+   .pages-container {
+       display: flex;
+       flex-direction: column;
+       align-items: center;
+       gap: 20px;
+   }
    /* Print Area - F4 Size (330mm x 210mm, Landscape) */
    .print-area {
        width: 325mm;
@@ -30,6 +36,7 @@
        column-gap: 1.5mm; /* gap for cutting */
        row-gap: 1.5mm; /* gap for cutting */
        break-after: avoid;
+       page-break-after: always;
    }
    /* Individual coupon */
    .coupon {
@@ -63,24 +70,40 @@
            margin: 0;
        }
        /* Hide everything except print-area */
-       body > *:not(.print-area) {
+       body > *:not(.pages-container) {
            display: none;
+       }
+       .pages-container {
+           width: 100vw;
+           margin: 0;
+           padding: 0;
        }
        .print-area {
            margin: 0;
            box-shadow: none;
-           page-break-after: avoid;
+           page-break-after: always;
        }
    }
    @page {
        size: 331mm 211mm; /* F4 landscape */
-       /* margin: 10mm;  Paper margin */
+   }
+   /* Hide button container when print */
+   .button-container {
+       display: block;
+   }
+   @media print {
+     .button-container {
+       display: none !important;
+     }
    }
 </style>
 </head>
 <body>
-<div class="print-area" id="printArea">
-<!-- Coupons will be generated here -->
+<div class="button-container" style="margin: 20px;">
+  <!-- Buttons will be inserted here -->
+</div>
+<div class="pages-container" id="pagesContainer">
+  <!-- Pages will be generated here -->
 </div>
 <script>
    function parseCouponCode(code) {
@@ -94,63 +117,66 @@
        };
    }
    function generateQRUrl(text) {
-       return `https://api.qrserver.com/v1/create-qr-code/?data=${encodeURIComponent(text)}&size=100x100`; // Square QR
+       return `https://api.qrserver.com/v1/create-qr-code/?data=${encodeURIComponent(text)}&size=100x100`;
    }
    function getQueryParams() {
        const params = new URLSearchParams(window.location.search);
        const codes = params.get('codes') ? params.get('codes').split('--') : [];
-       return codes.slice(0, 36); // Limit to 36 coupons
+       return codes.slice(0, 144); // Limit to 144 coupons
    }
    function generateCoupons() {
        const codes = getQueryParams();
-       const printArea = document.getElementById('printArea');
-       // Generate 36 coupon slots (empty if no code provided)
-       let html = '';
-       for (let i = 0; i < 36; i++) {
-           if (codes[i]) {
-               try {
-                   const parsed = parseCouponCode(codes[i]);
-                   const qrUrl = generateQRUrl(parsed.couponCode);
-                   html += `
+       const pagesContainer = document.getElementById('pagesContainer');
+       pagesContainer.innerHTML = '';
+       const couponsPerPage = 36;
+       const maxPages = 4;
+       for (let pageNum = 0; pageNum < maxPages; pageNum++) {
+           let html = '';
+           for (let i = 0; i < couponsPerPage; i++) {
+               const idx = pageNum * couponsPerPage + i;
+               if (codes[idx]) {
+                   try {
+                       const parsed = parseCouponCode(codes[idx]);
+                       const qrUrl = generateQRUrl(parsed.couponCode);
+                       html += `
 <div class="coupon">
 <div class="qr-container">
 <img src="${qrUrl}" alt="QR Code">
 </div>
 <div class="coupon-number">${parsed.couponNumber}</div>
 </div>
-                   `;
-               } catch (error) {
-                   console.error(error.message);
-                   html += `<div class="coupon"></div>`; // Empty coupon for invalid code
+                       `;
+                   } catch (error) {
+                       console.error(error.message);
+                       html += `<div class="coupon"></div>`;
+                   }
+               } else {
+                   html += `<div class="coupon"></div>`;
                }
-           } else {
-               html += `<div class="coupon"></div>`; // Empty coupon
            }
+           const pageDiv = document.createElement('div');
+           pageDiv.className = 'print-area';
+           pageDiv.innerHTML = html;
+           pagesContainer.appendChild(pageDiv);
        }
-       printArea.innerHTML = html;
-       // Trigger print preview if codes are provided
-       /* if (codes.length > 0) {
-           setTimeout(() => {
-               window.print();
-           }, 3000);
-       } */
    }
    function printCoupons() {
-       const printArea = document.getElementById('printArea');
-       if (!printArea.innerHTML.trim()) {
+       const pagesContainer = document.getElementById('pagesContainer');
+       if (!pagesContainer.innerHTML.trim()) {
            alert('Mohon generate kupon terlebih dahulu');
            return;
        }
        window.print();
    }
    function downloadPDF() {
-       const printArea = document.getElementById('printArea');
-       if (!printArea.innerHTML.trim()) {
+       const pagesContainer = document.getElementById('pagesContainer');
+       if (!pagesContainer.innerHTML.trim()) {
            alert('Mohon generate kupon terlebih dahulu');
            return;
        }
+       // Download all pages as one PDF
        const opt = {
-           margin: 0, // Paper margin
+           margin: 0,
            filename: 'qr-coupons.pdf',
            image: { type: 'jpeg', quality: 1.0 },
            html2canvas: {
@@ -164,14 +190,13 @@
                orientation: 'landscape'
            }
        };
-       html2pdf().set(opt).from(printArea).save();
+       html2pdf().set(opt).from(pagesContainer).save();
    }
    window.addEventListener('load', function() {
        generateCoupons();
        // Add buttons dynamically
-       const buttonContainer = document.createElement('div');
-       buttonContainer.style.margin = '20px';
-       buttonContainer.className = 'button-container'; // Add class for print hiding
+       const buttonContainer = document.querySelector('.button-container');
+       buttonContainer.innerHTML = '';
        const printButton = document.createElement('button');
        printButton.textContent = 'Print';
        printButton.onclick = printCoupons;
@@ -181,7 +206,6 @@
        downloadButton.onclick = downloadPDF;
        buttonContainer.appendChild(printButton);
        buttonContainer.appendChild(downloadButton);
-       document.body.insertBefore(buttonContainer, document.getElementById('printArea'));
    });
 </script>
 </body>
